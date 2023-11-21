@@ -1,289 +1,335 @@
-# Contributing Guidelines
+# Contributing Guidelines 开发指南
 
-The contribution of this project must follow the guidelines below.
+For Developers using English, please refer to [English Version](./CONTRIBUTING_en.md)
 
-In the beginning, we announce that **English is the only language** that is allowed
-in the whole workflow, as well as the code, comments and inline documentation.
-Because complex characters in other languages bring in encoding problems.
+**本项目开发必须遵循以下规范。**
 
-## Coding Style
+请注意， **英语是开发过程中唯一允许使用的语言** ，比如代码、注释、 Git message 和代码内文档。
+因为复杂字符存在编码问题，在整个开发协作过程中应当避免。
+
+## 代码风格
+
+### 前端
 
 WIP
 
-## Git Workflow
+### 后端
 
-We use git as our version control system, and follow the git workflow below.
+后端开发编写代码参考
+[**Java 开发手册（嵩山版）**](https://www.yuque.com/attachments/yuque/0/2023/pdf/35650452/1698473039843-c8b30758-0116-4785-a452-91164364b532.pdf)，
+开发者必须严格遵守上面准则。
 
-1. Before fixing a bug or implementing a new feature,
-contributers should **create an issue** in the issue tracker.
-The template of the issue has been involved in [README.md](README.md#issue-template).
+## Git 工作流
 
-2. Contributers should **create a branch** for the issue.
-Naming convention of the branch is stated [below](#branch-conventions).
+我们使用 git 作为我们的版本控制系统，并遵循下面的工作流程。
 
-3. When making progress, please commit your changes instantly.
-Specifically, just commit **change of one function in one commit** .
-The format of the commit message is stated [below](#commit-message).
+1. 在修复 bug 或实现新功能之前，开发者应首先 **创建一个新 issue** 。
+    发起新 issue 时使用 [该模板](#issue-模板) 。
 
-4. When the issue is fixed or the feature is implemented,
-please **create a pull request** for the branch.
-Refer to the [following section](#pull-request) for details.
+2. 处理 issue 时，应当 **创建一个新分支** ，分支相关规范[如下所述](#分支规范)。
 
-5. Please do a **self-review** first after creating a pull request.
-The assignee of the pull request will review the code and merge it if it is OK.
-Discussing if necessary.
+3. 若开发取得进展，请立即提交更改。
+   具体地，当 **一个功能开发完毕后，就提交更改** 。
+   Git 的提交信息请遵守 [如下规范](#git-提交信息) 。
 
-### Branch Conventions
+4. 解决 issue 后，请为该分支 **创建一个 Pull Request 请求合并代码** 。
+   参阅 [如下详述](#拉取请求-pull-request) 。
 
-Three main kinds of branches are used in this project:
+5. 在创建 Pull Request 后，开发者应首先 **自我审查** 代码。
+   Pull Request 指定的代码审查者而后将会审查你的代码，如果没有问题将会进行合并。
+   开发者可能需要代码审查者进行进一步讨论。
 
-- `main` : The main branch of the project.
+### 分支规范
 
-  `main` branch should be **stable** and **ready to release** .
-  A pull request tagged `[Release]`
-  should be created to merge the `dev` branch into `main` branch
-  when a new version is ready to release.
-  Release tags should be created on the `main` branch.
-  Hotfixes should be merged into `main` branch directly.
+我们主要使用三种分支：
 
-- `dev` : The **base branch** of the **development** .
+- `main` ：**主分支**
 
-  `dev` branch is the base branch of the development.
-  The features and bug fixes should be merged into `dev` branch via pull requests.
-  When `dev` branch is in a stable state,
-  a pull request tagged `[Release]` will be created to merge it into `main` branch.
+  `main` 分支应当始终处于 **稳定** 状态，是新版本的基准分支。
+  `main` 分支的合并仅接受带有 `[Release]` 标签的 Pull Request 。
+  紧急修复除外，应当直接合并到 `main` 分支中。
 
-- Other development branches: The branches for developing created from `dev` branch.
+  `main` 分支受到严格保护。
+  除了仓库的初始化外，没有人可以直接推送到主分支。
 
-The naming convention of the development branch is:
+- `dev` : **开发的基准分支**
 
-`<Type>/<Issue Number>-<Short Description>`
+  `dev` 分支是开发的基准分支。
+  新功能和 Bug 修复会通过 Pull Request 被合并到 `dev` 分支中。
+  当 `dev` 分支稳定后，需要发布新版本时，
+  仓库维护者应当创建一个带有 `[Release]` 标签的 Pull Request ，
+  将 `dev` 分支合并到 `main` 分支中。
 
-#### Type
+  `dev` 分支收到保护，
+  只有仓库维护者或具有权限的人才能直接推送至 `dev` 分支。
 
-There are mainly 6 types of development branches:
+- 其他开发分支：用于开发具体功能，从 `dev` 分支创建。
 
-- `hotfix` : **Hotfixes** for the `main` branch.
+开发分支的命名约定为：
 
-  When encountering a bug in the `main` branch,
-  which should be fixed immediately, a `hotfix` branch should be created.
-  After the fix, the branch should be merged into `main` branch directly.
+`<类型>/<关联 issue 编号>-<简短描述>`
 
-- `feature` : New **features** or **enhancements** .
+短划线（ - ）用于分隔问题编号和简短描述，
+下划线（ _ ）应用于分隔简短描述中的单词。
 
-  When implementing a new feature or enhancement for existing features,
-  a `feature` branch should be created.
-  After the feature is implemented, the branch should be merged into `dev` branch.
+#### 类型
 
-- `bugfix` : Bug **fixes** .
+开发分支主要有 6 种类型：
 
-  When fixing a bug, a `bugfix` branch should be created.
-  After the bug is fixed, the branch should be merged into `dev` branch.
+- `hotfix` : 对 `main` 分支的 **紧急修复**
 
-- `documentation` : **Documentation** for project.
+  当在 `main` 中遇到应该立即修复的 bug 时，应该创建一个 `hotfix` 分支。
+  修复后，该分支应直接合并到 `main` 分支中。
 
-  When writing or improving documentation, a `doc` branch should be created.
-  When using `documentation` branch, developers should not change the code.
-  After the documentation is finished, the branch should be merged into `dev` branch.
+- `feature` : **新功能**
 
-- `chore` : **Other** chores except for the above.
+  当实现新功能时，应创建 `feature` 分支。
+  实现后，应将分支合并到 `dev` 分支中。
 
-  When doing other chores, a `chore` branch should be created.
-  Chore is defined as something that is not a feature, bugfix, or documentation,
-  just like workspace configuration, CI/CD configuration, etc.
-  After the chore is finished, the branch should be merged into `dev` branch.
+- `bugfix` : **Bug 修复**
 
-#### Issue Number
+  修复 bug 时，应创建 `bugfix` 分支。
+  修复 bug 后，应将该分支合并到 `dev`` 分支中。
 
-The `<Issue Number>` is the number of the issue in the issue tracker.
-**Before** developing a feature or fixing a bug, an **issue should be created** .
+- `documentation` : 项目 **文档**
 
-#### Short Description
+  在编写或修补文档时，应创建`documentation`分支。
+  使用 `documentation` 分支时，开发者不应更改代码。
+  文档完成后，该分支应合并到 `dev` 中。
 
-The `<Short Description>` is a short description of the issue,
-which should be a short phrase.
+- `chore` : 除上述以外的其他 **杂项工作**
 
-**Dash** ( `-` ) should be used to separate issue number and short description,
-and **underscore** ( `_` ) should be used to separate words in the short description.
+  在进行其他杂项任务时，应该创建一个 `chore` 分支。
+  非新功能、 bug 修复或文档修补的更改，
+  例如工作区配置、CI/CD 配置等，均属于杂务。
+  完成后，该分支应该合并到 `dev` 分支中。
 
-### Commit Message
+#### 关联 issue 编号
 
-We refered to [this article](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/)
-and [Google Blocky Git Commit Guide](https://developers.google.com/blockly/guides/contribute/get-started/commits)
-when specifying our commit message guidelines.
+`<关联 issue 编号>` 是 Github Issue 中 issue 的编号。
+在开发新功能或修复 bug 之前，应当先创建一个新 issue 。
 
-The format of the commit message is:
+#### 主题
 
-```text
-<type>(<scope>): <subject>
+`<主题>` 是问题的简短描述。
+为了规避潜在的编码问题，应使用 **英语** 。
+描述应 **尽可能简短** ，以英文小短句为主。
 
-<body>
+### Git 提交信息
 
-<footer>
+制定此标准时，参考了 [这篇文章](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/)
+和 [Google Blocky Git Commit Guide](https://developers.google.com/blockly/guides/contribute/get-started/commits) 。
+
+提交信息的格式为：
+
+``` txt
+<类型>(<作用域>): <主题>
+
+<正文>
+
+<脚注>
 ```
 
-#### Type
+#### 类型
 
-The `<type>` is the type of the commit, which **should be one of the following** :
+`<类型>` 是更改的分类， **应该是以下分类之一** ：
 
-- `feat` : a new feature is introduced with the changes
-- `fix` : a bug fix has occurred
-- `chore` : changes that do not relate to a fix or feature
-  and don't modify src or test files (for example updating dependencies)
-- `refactor` : refactored code that neither fixes a bug nor adds a feature
-- `docs` : updates to documentation such as a the README or other markdown files
-- `style` : changes that do not affect the meaning of the code,
-  likely related to code formatting such as white-space, missing semi-colons, and so on.
-- `test` : including new or correcting previous tests
-- `perf` : performance improvements
-- `ci` : continuous integration related
-- `build` : changes that affect the build system or external dependencies
-- `revert` : reverts a previous commit
 
-**Breaking changes**
+- `feat` : 新功能或特性实现
+- `fix`:  bug 修复
+- `chore` : 与修复或功能无关的更改，
+  并且不修改源代码或测试文件（例如更新依赖关系）
+- `refactor` : 代码重构，既没有新增功能也没有修复 bug
+- `docs` : 更新文档，如 README 或其他 Markdow 文件
+- `style` : 不影响代码含义的更改，
+  可能与代码格式有关，如缩进问题、缺少分号等。
+- `test` : 包括新的或纠正以前的测试
+- `perf` : 性能改进
+- `ci` : 持续集成（ CI/CD ）相关
+- `build` : 影响构建系统或外部依赖关系的更改
+- `revert` : 回退之前的提交
 
-Commits that make breaking changes should append a `!` after the type of the commit.
-Breaking changes are **changes that may break** the other part (including user),
-causing developers or users to have to do extra work.
+**重大变更**
 
-#### Scope
+重大更改是指可能破坏其他部分（包括用户）的更改，
+导致开发人员或用户不得不做额外的工作。
+进行重大更改的提交应在提交类型后附加一个 `!` 符号。
 
-The `<scope>` is *optional* , which is the affected area of the commit.
+#### 作用域
 
-There is no strict rule for the scope,
-but it should be a short phrase describing the affected area precisely,
-and should be **enclosed in parentheses** ( `()` ).
+`<作用域>` 是 *可选* 的，描述更改的影响范围。
 
-Use the name of the affected function
-(not the function signature, but an abstract name of the part of program)
-is usually a good choice.
+对范围的描述没有严格的规定，但它应该是一个精确描述受影响区域的短语，并且应该 **括在括号**（ ` ( ) ` ）中。
 
-#### Subject
+使用 **受影响函数的名称**
+（不是函数签名，可以是程序部分的抽象名称）通常是不错的选择。
 
-The `<subject>` is a short description of the commit,
-which should be a sentence with following **rules** :
+#### 主题
 
-- **DO NOT** use capital letter at the beginning.
-- **DO NOT** end with a period ( `.` ).
-- **Use** imperative, present tense: "change" not "changed" nor "changes".
-- **No more than 50 characters**.
+`<主题>`` 是变更内容的简短描述，
+它应该是一个符合 **以下规则** 的 **英文短句** ：
 
-#### Body
+- **不要** 在开头使用大写字母。
+- **不要** 以句号 ( `.` ) 结尾。
+- **使用** 祈使句，现在时：
+  “ change ”而不是“ changed ”或“ changes ”。
+- **不超过 50 个字符** 。
 
-The `<body>` is *optional* , which is a long description of the commit.
+#### 正文
 
-When changes are too complex to describe in the subject,
-please use markdown list to describe the changes in the body in an organized way.
+`<正文>` 是 *可选* 的，是对提交的 **英文** 详细描述。
 
-#### Footer
+当主题中的更改过于复杂而无法用一个英文短句描述时，
+请使用 Markdown 列表以有组织的方式在正文中描述更改。
 
-The `<footer>` is *optional* , which is used to reference issues.
+#### 脚注
 
-According to the [GitHub Docs](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests),
-There is a few keywords that can be used to reference issues, even close them.
+`<footer>` 是 *可选* 的，用于引用 issue 。
 
-We use a subset of the keywords:
+根据 [GitHub Docs](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests) ，
+有一些关键字可用于引用 issue ，甚至关闭它们。
 
-- `Closes` : the commit **closes** the issue.
-  **DO NOT** use this keyword because we want GitHub to close the issue automatically.
-- `Fixes` : the commit **fixes** the issue.
-  When commit finally fix an issue (any kind including bug, feature request, etc),
-  use this keyword to reference the issue instaed of `Closes` .
-- `Resolves` : the commit **resolves** the issue.
-  Use this key word when commit resolve an issue,
-  especially when the commit is not the only commit that resolve the issue.
+我们使用关键字的一个子集：
 
-### Pull Request
+- `Closes` : 本次提交将关闭一个 issue。
+  请 **不要** 使用此关键字，因为我们希望 GitHub 自动关闭问题。
+- `Fixes` : 本次提交解决了一个 issue。
+  当提交最终解决了一个 issue（包括 bug 、功能请求等任何类型）时，
+  使用此关键字引用该 issue ，而不是 `Closes` 。
+- `Resolves` : 本次提交 **正在处理** 一个issue。
+  当提交正在解决一个 issue 时，
+  特别是当提交不是解决该问题的唯一提交时，使用此关键字。
 
-When the development branch is completed,
-a pull request should be created to merge the branch into `dev` branch.
+### 拉取请求 Pull Request
 
-When `dev` branch is in a stable state,
-a pull request tagged `[Release]` will be created to merge it into `main` branch.
+开发分支完成开发后，应创建一个 Pull Request ，
+将该分支合并到`dev`分支中。
 
-`main` branch is **strictly protected** .
-**No one** can push to `main` branch directly except for the initializations of the repository.
+当 `dev` 分支处于稳定状态时，将创建一个标记为 `[Release]` 的拉取请求，
+将其合并到 `main` 分支中。
 
-`dev` branch is **protected** .
-Only repository **owner or ones with permission** can push to `dev` branch directly.
+`main`分支受到 **严格保护** 。
+除了存储库的初始化外， **没有人** 可以直接推送到主分支。
 
-#### Title
+`dev` 分支受 **保护** 。
+只有 **仓库所有者或具有权限的人** 才能直接推送至 `dev` 分支。
 
-The title of the pull request should be:
+#### 标题
 
-`[<Type>] <Short Description> #<Issue number>`
+拉取请求的标题应该是：
+`[<类型>] <简短描述> #<问题编号>`
 
-The `<Type>` is the type of the development branch.
+`<类型>` 是开发分支的类型。
 
-And the `<Short Description>` is the short description of the issue.
+`<简短描述>` 是问题的简短描述。
 
-`<Issue number>` is the number of the issue in the issue tracker,
-referanced by the pull request via `#` sign.
+`<问题编号>` 是问题跟踪器中问题的编号，被该拉取请求用 `#` 引用。
 
-An exception is that when merging `dev` branch into `main` branch.
-The title should be `[Release] <Package Name> <Version>` at that time.
+一种例外情况是当合并 `dev` 分支到 `main` 分支时。
+此时标题应为 `[Release] <软件包名> <版本号>` 。
 
-#### Description
+#### 描述
 
-The description of the pull request should involve the **hotspots** of the changes.
-If you want **reviewers** to focus on some parts of the changes,
-please use markdown **checklist** to state them out.
+拉取请求的描述包含 **主要修改或修复功能** 。
+如果您希望 **审阅者** 关注更改的某些部分，
+请使用 **markdown 清单** 将其说明。
 
-When encountering a release merge,
-the description should be the **release notes** of the version.
-A simple release note template is:
+当新版本发布时，描述应该是该版本的发布说明。
 
-```markdown
-# CHANGELOG
+一个简单的发布说明模板如下：
 
-## Bug Fixes
+``` markdown
+# CHANGELOG 更新日志
 
-- #<Issue Number>
+## Bug Fixes 问题修复
 
-## Enhancements
+-  #<问题编号>
 
-- #<Issue Number>
+## Enhancements 功能优化
 
-## Features
+-  #<问题编号>
 
-- #<Issue Number>
+## Features 新功能
 
-## <Some Other Categories>
+-  #<问题编号>
 
-...
+## <其他类别（双语描述）>
 ```
 
-#### Source and Target Branch
+#### 源分支和目标分支
 
-|           Source           | Target |
-|:--------------------------:|:------:|
-|             dev            |  main  |
-|           hotfix           |  main  |
-| other development branches |   dev  |
+|    源分支    | 目标分支 |
+|:------------:|:--------:|
+|      dev     |   main   |
+|    hotfix    |   main   |
+| 其他开发分支 |    dev   |
 
-#### Conflicts
+#### 处理冲突
 
-Conflicts should be resolved before merging the pull request.
+在 **合并拉取请求之前** ，应先 **解决冲突** 。
 
-There is a recommended way to resolve conflicts:
+有一种推荐的解决冲突的方法：
 
-1. Merge the **target branch** into the **source branch** .
-2. Resolve conflicts via tools and commit.
-3. Merge the **source branch** into the **target branch** if everything is OK.
+- 将 **目标分支** 合并到 **源分支** 中。
+- 通过工具和解决冲突并提交。
+- 如果一切正常，将 **源分支** 合并到 **目标分支** 。
 
-Use `chore` in merge commit message and make the first letter of the subject decapitalized.
+上述过程中，合并产生的 Git 提交消息使用 `chore` 分类，
+并按照提交消息中的主题部分要求，将消息的第一个字母改为小写。
 
-#### Merge
+#### 合并
 
-Reviewers should **review all the changes** in the pull request before merging it.
+审阅者应在合并之前 **审阅拉取请求中的所有更改** 。
 
-When merging a pull request, always use **squash and merge** in GitHub.
+合并拉取请求时，请始终使用 **压缩并合并（ Squash and Merge ）** 。
 
-The title of the merge commit should be **the title of the pull request** .
+合并的 Git 提交消息主题应为 **拉取请求的标题** 。
 
-The message of the merge commit should be **the changes of the pull request** ,
-which can be generated by GitHub automatically.
+合并的 Git 提交消息正文应为 **拉取请求的更改** ，
+由 GitHub 自动生成。
 
-When merging a pull request tagged `[Release]` ,
-the title of the merge commit should be `[Release] <Package Name> <Version>` ,
-and the message of the merge commit should be **the release notes** of the version.
+当合并标记为 `[Release]` 的拉取请求时，
+合并的 Git 提交消息主题应为 `[Release] <软件包名> <版本号>` ，
+正文应为该版本的**发布说明**。
+
+## Issue 模板
+
+除以下部分外，Issue 的格式没有严格限制：
+
+### 标题
+
+Issue 的标题分为两部分：
+
+`[<类别>]: <描述> (<状态>)`
+
+类别为以下之一：
+
+- `Bug`: 有功能无法正常工作
+- `Feature Request`: 请求一项新的功能或特性
+- `Enhancement`: 请求增强现有功能
+- `Documentation`: 文档缺失或需要改进
+- `Discussion`: 讨论一些话题
+
+`<Catagory>` 应包含在 `[ ]` 中。
+
+`<Description>` 应该是问题的简短描述。
+如果需要长篇描述，应该放在问题的正文中。
+
+`<Status>` 是 *可选的* ，它是问题的状态，只能由开发人员附加。
+当修复合并到 `dev` 时，状态应附加为 `Fixed` 。
+在修复合并到主分支后，问题将自动关闭。
+
+### 负责人
+
+处理 issue 的人。如果您不确定应该分配给谁，您可以将其留空。
+
+### 标签
+
+标签用于对问题分类。您可以向 issue 添加多个标签。
+
+可用的标签大致有：
+
+- `bug`: 有功能无法正常工作
+- `enhancement`: 增强现有功能
+- `documentation`: 文档缺失或需要改进
+- `discussion`: 讨论一些话题
