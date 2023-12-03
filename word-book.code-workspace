@@ -1,0 +1,21 @@
+{
+    "folders": [
+        {
+            "name": "Word Book",
+            "path": "."
+        },
+        {
+            "name": "Documentations",
+            "path": "./docs"
+        },
+        {
+            "name": "Frontend",
+            "path": "./frontend"
+        },
+        {
+            "name": "Backend",
+            "path": "./backend"
+        }
+    ],
+    "settings": {},
+}
